@@ -1,7 +1,7 @@
 # first-graphql-project
 First hands on GraphQL
 
-**A simple GraphQL Project where a user can; **
+**A simple GraphQL Project where a user can;**
 - sign up
 - sign in
 - post Post
@@ -12,13 +12,13 @@ First hands on GraphQL
 - view other's particular post but only public
 - view his/her information
 
-*To run the project; *
+_To run the project;_ 
 - clone the repo
 - run npm install in the root directory of the cloned directory(where package.json is)
 - Make a config.env file inside src/config/ 
 - place the following values inside config.env
->PORT=<port>
->MONGO_URI=<mongouri>
->SECRET_KEY=<secretkey>
->NODE_ENV=<node_environment>
+>>PORT=<port><br />
+>>MONGO_URI=<mongouri><br />
+>>SECRET_KEY=<secretkey><br />
+>>NODE_ENV=<node_environment><br />
 - then in the root directory of the clone directory(where app.js is) run npm run babel-node
