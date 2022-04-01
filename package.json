@@ -1,0 +1,28 @@
+{
+    "name": "graphql-first-project",
+    "version": "1.0.0",
+    "description": "learning graphql with nodejs, apollo server",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "babel-node": "nodemon --exec babel-node app.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/cli": "^7.17.6",
+        "@babel/core": "^7.17.8",
+        "@babel/node": "^7.16.8",
+        "@babel/preset-env": "^7.16.11",
+        "nodemon": "^2.0.15"
+    },
+    "dependencies": {
+        "apollo-server-express": "^3.6.7",
+        "bcrypt": "^5.0.1",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "graphql": "^16.3.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.2.9"
+    }
+}
