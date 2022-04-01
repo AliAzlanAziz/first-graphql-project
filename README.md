@@ -17,8 +17,8 @@ _To run the project;_
 - run npm install in the root directory of the cloned directory(where package.json is)
 - Make a config.env file inside src/config/ 
 - place the following values inside config.env
->>PORT=<port><br />
->>MONGO_URI=<mongouri><br />
->>SECRET_KEY=<secretkey><br />
->>NODE_ENV=<node_environment><br />
+>PORT=<port_number><br />
+>MONGO_URI=<mongo_uri><br />
+>SECRET_KEY=<secret_key><br />
+>NODE_ENV=<node_environment><br />
 - then in the root directory of the clone directory(where app.js is) run npm run babel-node
