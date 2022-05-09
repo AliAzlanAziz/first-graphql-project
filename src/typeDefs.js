@@ -4,7 +4,7 @@ const { gql } = require('apollo-server-express');
 export const typeDefs = gql`
   type Query {
     user: User,
-    posts: [Post!]!,
+    posts(limit: Int, skip: Int): [Post!]!,
     post(id: ID!): Post,
     userPosts(id: ID!): [Post!]!,
     myPosts: [Post!]!,
@@ -13,6 +13,9 @@ export const typeDefs = gql`
     signup(name: String!, email: String!, password: String!): Boolean!,
     signin(email: String!, password: String!): String,
     addPost(title: String, description: String!, privacy: String): Post,
+  },
+  type Subscription{
+    newUser: User!
   }
   type User{
     id: ID,

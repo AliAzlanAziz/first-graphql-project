@@ -1,28 +1,40 @@
 import bcrypt from 'bcrypt'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
+import { PubSub } from 'graphql-subscriptions';
 import User from './models/user'
 import Post from './models/post'
 const saltRounds = 10
+
+const pubSub = new PubSub();
+
+const NEW_USER = "NEW_USER";
 
 export const resolvers = {
     Query: {
         user: async (_, __, context) => {
             try{
+                if(!context.user) return null
                 return await User.findById(context.user._id).select('_id name email')
             }catch(error){
                 return null
             }
         },
-        posts: async (_, __, ___) => {
+        posts: async (_, { limit, skip }, context) => {
             try{
-                return await Post.find({ privacy: 'public' }).populate('user', '_id name')
+                if(!context.user) return null
+                return await Post
+                    .find({ privacy: 'public' })
+                    .populate('user', '_id name')
+                    .limit(limit)
+                    .skip(skip)
             }catch(error){
                 return []
             }
         },
         post: async (_, { id }, context) => {
             try{
+                if(!context.user) return null
                 const post = await Post.findById(id).populate('user', '_id name')
                 if(post.privacy === 'public')
                     return post
@@ -35,8 +47,9 @@ export const resolvers = {
                 return null
             }
         },
-        userPosts: async (_, { id }, ___) => {
+        userPosts: async (_, { id }, context) => {
             try{
+                if(!context.user) return null
                 return await Post.find({ user: id, privacy: 'public' }).populate('user', '_id name')
             }catch(error){
                 return []
@@ -44,6 +57,7 @@ export const resolvers = {
         },
         myPosts: async (_, __, context) => {
             try{
+                if(!context.user) return null
                 return await Post.find({ user: context.user._id }).populate('user', '_id name email')
             }catch(error){
                 return []
@@ -66,6 +80,9 @@ export const resolvers = {
                 }); 
 
                 await user.save()
+                pubSub.publish(NEW_USER, {
+                    newUser: user
+                });
                 return true
             }catch(error){
                 console.log(error)
@@ -91,6 +108,7 @@ export const resolvers = {
         },
         addPost: async (_, { title, description, privacy }, context) => {
             try{
+                if(!context.user) return null
                 const post = new Post({
                     _id: new mongoose.Types.ObjectId(),
                     user: context.user._id,
@@ -106,5 +124,10 @@ export const resolvers = {
                 return null
             }
         }
-    }
-  };
+    },
+    Subscription: {
+        newUser: {
+            subscribe: (_, __, ___) => pubSub.asyncIterator(NEW_USER)
+        }
+    },
+};

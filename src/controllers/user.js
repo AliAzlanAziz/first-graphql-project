@@ -13,7 +13,8 @@ exports.getUser = async (token) => {
 
         return user
     }catch(error){
-        console.log(error)
+        // console.log(JSON.stringify(error))
+        console.log(error.message)
         return null
     }
 }
